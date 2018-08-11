@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>가위 바위 보</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+//var n=prompt("원하는 숫자를 0~2까지 넣어보세요");
+//alert("당신이 입력한 숫자는 "+n);
+//var n=컴퓨터가 결정;  /* 0~2 */
+
+var arr=new Array();
+arr[0]="가위.png";
+arr[1]="바위.png";
+arr[2]="보.png";
+
+var r=Math.random(); //랜덤한 숫자 반환
+//document.write(parseInt(r*arr.length));
+var n=parseInt(r*arr.length);
+
+addEventListener("load", function(){
+	createImg();
+});
+//가위, 바위 , 보 중 하나를 컴퓨터에 의해 결정짓자!!
+function createImg(){
+	var img=document.createElement("img");
+	img.src="./images/"+arr[n];	
+	document.body.appendChild(img);
+}
+</script>
+</head>
+<body>
+
+</body>
+</html>
