@@ -36,11 +36,15 @@ var stage,info;
 var data=new Array(); //좌표정보를 가진 일차원 배열들을 
 								//넣게 될 배열
 var str=""; //좌표 정보를 누적할 변수
+var hero;
+var step=0; //몇번째 2차원 배열 요소를 사용할지 결정하는 변수
+var flag=false; //move  함수 호출여부를 결정짓는 스위치 변수 
 
 addEventListener("load", function(){
 	stage=document.getElementById("stage");
 	info=document.getElementById("info");
 	createHero();
+	gameLoop();
 	
 	//stage 를 대상으로 마우스 이벤트 구현 
 	stage.addEventListener("mousedown", function(){
@@ -70,7 +74,7 @@ addEventListener("load", function(){
 
 //주인공 등장 
 function createHero(){
-	var hero=document.createElement("img");
+	hero=document.createElement("img");
 	hero.src="./images/jjang.png";
 	hero.style.width=40+"px";
 	hero.style.position="absolute"; //부모를 기준으로 한 위치 속성
@@ -79,6 +83,22 @@ function createHero(){
 
 	stage.appendChild(hero);
 }
+//2차원 데이터베이스를 이용하여 좌표를 추적해가며 케릭터위 위치값을
+//변경한다!!
+function move(){
+	hero.style.left=data[step][0]+"px";
+	hero.style.top=data[step][1]+"px";
+	step++;
+}
+//현재 움직이던 움직이지 않던간에, 에니메이션을 구현하려면,
+//프로그램이 가동되자 마자 무조건 게임루프가 이미 돌고 있어야 한다..
+//게임의 모든 케릭터들을 움직이는 동력 = 심장박동!!
+function gameLoop(){
+	if(flag){
+		move();
+	}
+	setTimeout("gameLoop()",50);
+}
 </script>
 </head>
 <body>
@@ -86,5 +106,6 @@ function createHero(){
 		<div id="stage"></div>
 		<div id="info"></div>
 	</div>
+	<button onClick="flag=true">움직이기</button>
 </body>
 </html>
