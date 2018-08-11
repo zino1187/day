@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>랜덤 그리드 겔러리</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+#mask{
+	width:300px;
+	height:300px;
+	border:2px solid red;
+	margin:auto;
+	overflow:hidden; /* 넘치는 컨텐트는 안보이게 가린다!!*/
+}
+</style>
+<script src="./js/mountain.js"></script>
+<script>
+var mask;
+var w=300; //이미지의 가로와 세로너비
+//var pos=[0,300,600];
+var pos=new Array(photo.length); //9개
+var s=Math.sqrt(pos.length);
+
+for(var i=0;i<s;i++){
+	pos[i]=w*i;
+}
+
+var count=0;//몇번째마다 사진을 움직일지 결정하기 위해서는 카운트를 세서
+					//그 카운트값을 원하는 수로 나눈 나머지를 구해야 한다...
+var box;
+var targetX=0; //box가 도달할 목표지점의 x좌표
+var targetY=0; //box가 도달할 목표지점의 y좌표
+var a=0.05;  //10%씩 움직이게 하는 비율값 (비율계수)
+
+addEventListener("load", function(){
+	mask=document.getElementById("mask");
+	createImg();
+	gameLoop();
+});
+
+//box 구성하기 
+function createImg(){
+	box=document.createElement("div");
+	box.style.background="yellow";
+	box.style.width=w*3+"px";
+	box.style.height=w*3+"px";
+	box.style.position="relative";
+	box.style.left=0+"px";
+	box.style.top=0+"px";
+	mask.appendChild(box);
+
+	//box에다가 배열수만큼의 이미지를 동적으로 부착해넣자!!
+	var n=0;
+	for(var a=0; a<s;a++){
+		for(var i=0;i<s;i++){
+			var img=document.createElement("img");
+			img.src=photo[n++];
+			img.style.width=w+"px";
+			img.style.height=w+"px";
+			img.style.position="absolute";
+			img.style.left=i*w+"px";
+			img.style.top=a*w+"px";
+			box.appendChild(img);
+		}
+	}
+}
+
+//box를 움직이는 함수 ( 0,-300,-600) 내에서 움직임
+function move(){
+	//parseFloat 하는 이유?? 	box.style.left 값 자체에 "px" 이 끝에 포함되므로, 문자이기 
+	//때문에 수치연산이 불가능함..따라서 px 떨구기 위해 parseFloat() 처리함.
+	//또한 parseInt() 을 하지 않은 이유는? 정밀도가 떨어지므로...소수점까지 표현하기 위해..
+	box.style.left= parseFloat(box.style.left) + a*(targetX- parseFloat(box.style.left))+"px";
+	box.style.top= parseFloat(box.style.top) + a*(targetY- parseFloat(box.style.top))+"px";
+}
+
+function gameLoop(){
+	//console.log("gameLoop 실행중...", count);
+	count++;	
+
+	if(count%100==0){
+		//console.log("사진의 목표지점을 정해줄께요..");
+		targetX=-pos[parseInt(Math.random()*pos.length)]; //0.023233
+		targetY=-pos[parseInt(Math.random()*pos.length)]; //0.023233
+	}
+
+	move();
+	setTimeout("gameLoop()", 10);
+}
+</script>
+</head>
+<body>
+	<div id="mask"></div>
+</body>
+</html>
