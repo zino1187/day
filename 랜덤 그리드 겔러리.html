@@ -34,6 +34,9 @@ var pos=[0,300,600];
 var count=0;//몇번째마다 사진을 움직일지 결정하기 위해서는 카운트를 세서
 					//그 카운트값을 원하는 수로 나눈 나머지를 구해야 한다...
 var box;
+var targetX=0; //box가 도달할 목표지점의 x좌표
+var targetY=0; //box가 도달할 목표지점의 y좌표
+var a=0.05;  //10%씩 움직이게 하는 비율값 (비율계수)
 
 addEventListener("load", function(){
 	mask=document.getElementById("mask");
@@ -70,21 +73,24 @@ function createImg(){
 
 //box를 움직이는 함수 ( 0,-300,-600) 내에서 움직임
 function move(){
-	var r=parseInt(Math.random()*pos.length); //0.023233
-	box.style.left=-pos[r]+"px";
-
-	var r2=parseInt(Math.random()*pos.length); //0.023233
-	box.style.top=-pos[r]+"px";
+	//parseFloat 하는 이유?? 	box.style.left 값 자체에 "px" 이 끝에 포함되므로, 문자이기 
+	//때문에 수치연산이 불가능함..따라서 px 떨구기 위해 parseFloat() 처리함.
+	//또한 parseInt() 을 하지 않은 이유는? 정밀도가 떨어지므로...소수점까지 표현하기 위해..
+	box.style.left= parseFloat(box.style.left) + a*(targetX- parseFloat(box.style.left))+"px";
+	box.style.top= parseFloat(box.style.top) + a*(targetY- parseFloat(box.style.top))+"px";
 }
 
 function gameLoop(){
 	console.log("gameLoop 실행중...", count);
 	count++;	
 
-	if(count%50==0){
-		console.log("사진 움직일께요");
-		move();
+	if(count%100==0){
+		console.log("사진의 목표지점을 정해줄께요..");
+		targetX=-pos[parseInt(Math.random()*pos.length)]; //0.023233
+		targetY=-pos[parseInt(Math.random()*pos.length)]; //0.023233
 	}
+
+	move();
 	setTimeout("gameLoop()", 10);
 }
 </script>
