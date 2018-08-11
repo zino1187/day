@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>다차원 배열</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+//선언과 동시에 그 값을 결정하고싶을때..
+var car=["벤츠","아우디","BMW","테슬라"]; 
+var color=["red","yellow","blue","green"];
+var fruit=["사과","바나나","딸기","포도"];
+
+var box=new Array(); //상자들을 담게될 배열 준비
+box[0]=car;//첫번째 칸에 자동차 배열을 탑재!!
+box[1]=color;
+box[2]=fruit;
+
+for(var i=0;i<box.length;i++){
+	for(var a=0;a<box[i].length;a++){
+		document.write(box[i][a]);
+	}
+	document.write("<br>");
+}
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
