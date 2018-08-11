@@ -20,6 +20,7 @@ body{margin:0px;}
 	background-repeat:no-repeat;
 	background-size:100% 550px; /*width  , height*/
 	float:left;
+	position:relative;
 }
 #info{
 	width:20%;
@@ -30,12 +31,30 @@ body{margin:0px;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+var stage,info;
 
+addEventListener("load", function(){
+	stage=document.getElementById("stage");
+	info=document.getElementById("info");
+	createHero();
+});
+
+//주인공 등장 
+function createHero(){
+	var hero=document.createElement("img");
+	hero.src="./images/jjang.png";
+	hero.style.width=40+"px";
+	hero.style.position="absolute"; //부모를 기준으로 한 위치 속성
+	hero.style.left=0+"px";
+	hero.style.top=0+"px";
+
+	stage.appendChild(hero);
+}
 </script>
 </head>
 <body>
 	<div class="wrapper">
-		<div id="stage">롤러코스터 화면</div>
+		<div id="stage"></div>
 		<div id="info">좌표정보</div>
 	</div>
 </body>
