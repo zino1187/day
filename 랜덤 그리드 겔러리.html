@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>랜덤 그리드 겔러리</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+#mask{
+	width:300px;
+	height:300px;
+	border:2px solid red;
+	margin:auto;
+	overflow:hidden;/* 넘치는 컨텐트는 안보이게 가린다!!*/
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+var mask;
+var w=300; //이미지의 가로와 세로너비
+var photo=[
+	"./images/p1.jpg",
+	"./images/p2.jpg",
+	"./images/p3.jpg",
+	"./images/p4.jpg",
+	"./images/p5.jpg",
+	"./images/p6.jpg",
+	"./images/p7.jpg",
+	"./images/p8.jpg",
+	"./images/p9.jpg"
+];
+
+var pos=[0,300,600];
+var count=0;//몇번째마다 사진을 움직일지 결정하기 위해서는 카운트를 세서
+					//그 카운트값을 원하는 수로 나눈 나머지를 구해야 한다...
+var box;
+
+addEventListener("load", function(){
+	mask=document.getElementById("mask");
+	createImg();
+	gameLoop();
+});
+
+//box 구성하기 
+function createImg(){
+	box=document.createElement("div");
+	box.style.background="yellow";
+	box.style.width=w*3+"px";
+	box.style.height=w*3+"px";
+	box.style.position="relative";
+	box.style.left=0+"px";
+	box.style.top=0+"px";
+	mask.appendChild(box);
+
+	//box에다가 배열수만큼의 이미지를 동적으로 부착해넣자!!
+	var n=0;
+	for(var a=0; a<3;a++){
+		for(var i=0;i<3;i++){
+			var img=document.createElement("img");
+			img.src=photo[n++];
+			img.style.width=w+"px";
+			img.style.height=w+"px";
+			img.style.position="absolute";
+			img.style.left=i*w+"px";
+			img.style.top=a*w+"px";
+			box.appendChild(img);
+		}
+	}
+}
+
+//box를 움직이는 함수 ( 0,-300,-600) 내에서 움직임
+function move(){
+	var r=parseInt(Math.random()*pos.length); //0.023233
+	box.style.left=-pos[r]+"px";
+
+	var r2=parseInt(Math.random()*pos.length); //0.023233
+	box.style.top=-pos[r]+"px";
+}
+
+function gameLoop(){
+	console.log("gameLoop 실행중...", count);
+	count++;	
+
+	if(count%50==0){
+		console.log("사진 움직일께요");
+		move();
+	}
+	setTimeout("gameLoop()", 10);
+}
+</script>
+</head>
+<body>
+	<div id="mask"></div>
+</body>
+</html>
