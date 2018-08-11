@@ -27,16 +27,45 @@ body{margin:0px;}
 	height:100%;
 	background:pink;
 	float:left;
+	overflow:scroll;
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 var stage,info;
+var data=new Array(); //좌표정보를 가진 일차원 배열들을 
+								//넣게 될 배열
+var str=""; //좌표 정보를 누적할 변수
 
 addEventListener("load", function(){
 	stage=document.getElementById("stage");
 	info=document.getElementById("info");
 	createHero();
+	
+	//stage 를 대상으로 마우스 이벤트 구현 
+	stage.addEventListener("mousedown", function(){
+		var x=event.clientX;//마우스의 x 좌표
+		var y=event.clientY;//마우스의 y좌표
+		//이 점의 좌표를 담게될 일차원 배열 생성 
+		var pos=[ x, y ];
+		data.push(pos);//순서대로 알아서 넣어줌..0,1,2번째순으로
+				
+		//쌓아진 정보를 우측의 정보 div 에 출력해보자!!
+		str=str+"x축="+pos[0]+" , y축="+pos[1] +"\n";
+		info.innerText=str;
+		
+		//stage에 dot 문자 span으로 감싸서 부착하자!!
+		var span=document.createElement("span");
+		span.innerText="●";
+		span.style.fontSize=1+"px";
+		span.style.color="yellow";
+		span.style.position="absolute";//stage 를 기준으로 한 위치지정
+		span.style.left=pos[0]+"px";
+		span.style.top=pos[1]+"px";
+
+		stage.appendChild(span); //부착!!
+	});
+
 });
 
 //주인공 등장 
@@ -55,7 +84,7 @@ function createHero(){
 <body>
 	<div class="wrapper">
 		<div id="stage"></div>
-		<div id="info">좌표정보</div>
+		<div id="info"></div>
 	</div>
 </body>
 </html>
