@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>체크박스 일괄처리</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+//문서내의 모든 체크박스가...대표체크박스의 상태를 따라하기!!
+function getInfo(){
+	var king=document.getElementById("king");
+	//alert(king.checked);
+
+	var ch=document.getElementsByName("ch");
+	alert("동물 체크박스의 갯수는 "+ch.length);
+	
+	for(var i=0;i<ch.length;i++){
+		ch[i].checked=king.checked;
+	}
+	//name 과  id는 모두 문서내의 요서들간 구분을 위해 사용되는데, 
+	//id는 중복을 허용하지 않고, name 을 중복을 허용해준다
+	//이때 name값이 중복된 경우 내부적으로 배열로 선언한것으로 간주한다
+	//따라서 var ch = new Array();
+}
+</script>
+</head>
+<body>
+	<input type="checkbox" id="king" onClick="getInfo()">대표
+
+	<input type="checkbox" name="ch">개
+	<input type="checkbox" name="ch">고양이
+	<input type="checkbox" name="ch">말
+	<input type="checkbox" name="ch">사슴
+	<input type="checkbox" name="ch">고슴도치
+	<input type="checkbox" name="ch">붕어
+	<input type="checkbox" name="ch">독수리
+	<input type="checkbox" name="ch">낙타
+	<input type="checkbox" name="ch">앵무새
+	<input type="checkbox" name="ch">오징어
+</body>
+</html>
